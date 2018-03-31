@@ -8,8 +8,9 @@ GUIButton::GUIButton()
 {
 }
 
-GUIButton::GUIButton(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color, String _name, int _tSize)
-	: GUIElement(_onPage, _xPos, _yPos, _width, _height, _color), name(_name), tSize(_tSize){
+void GUIButton::begin(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color, String _name, int _tSize) {
+	GUIElement::begin(_onPage, _xPos, _yPos, _width, _height, _color, _name);
+	tSize = _tSize;
 
 }
 
@@ -56,14 +57,14 @@ void GUIButton::draw(ILI9341_t3 tft)
 void GUIButton::inputLeft()
 {
 	if (callback == NULL) return;
-	callback(-1*accel());
+	callback(-1 * accel());
 	updateDrawing = true;
 }
 
 void GUIButton::inputRight()
 {
 	if (callback == NULL) return;
-	callback(1*accel());
+	callback(1 * accel());
 	updateDrawing = true;
 }
 

@@ -22,11 +22,12 @@ protected:
 	boolean selected = false;
 	GUIPage* onPage;
 	Color color;
+	String name;
 
 
 public:
 	GUIElement();
-	GUIElement(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color);
+	void begin(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color, String _name);
 
 	using Drawable::draw;
 	virtual void draw(ILI9341_t3 tft);

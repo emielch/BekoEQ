@@ -19,6 +19,7 @@ class Drawable
  public:
 	 Drawable();
 	 virtual void update();
+	 void resetDrawing();
 	 void draw(ILI9341_t3 tft, boolean force);
 	 virtual void draw(ILI9341_t3 tft);
 };

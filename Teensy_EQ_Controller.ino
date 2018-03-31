@@ -4,8 +4,10 @@
  Author:	emiel
 */
 
-// the setup function runs once when you press reset or power the board
 
+#include "SettingsPage.h"
+#include "NotifyBar.h"
+#include "NavBar.h"
 #include "GUIButton.h"
 #include "Drawable.h"
 #include "TestPage.h"
@@ -20,10 +22,19 @@ void setup() {
 	setupAudio();
 }
 
-// the loop function runs over and over again until power down or reset
+
 void loop() {
 	updateEncoders();
+	updateAudio();
 
 	gui.update();
 	gui.draw();
+}
+
+int screenBri = 20;
+void setScreenBri(float b) {
+	screenBri += b;
+	if (screenBri < 5) screenBri = 5;
+	else if (screenBri > 255) screenBri = 255;
+	gui.setScreenBri(screenBri);
 }

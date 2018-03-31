@@ -4,14 +4,14 @@
 #define _TESTPAGE_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
-	#include "wprogram.h"
+#include "wprogram.h"
 #else
-	#include "WProgram.h"
+#include "WProgram.h"
 #endif
 
 
 #include "GUIPage.h"
-#define NUM_ELEM 12
+
 
 extern float lowShelfFreq;
 extern float band1Freq;
@@ -28,6 +28,8 @@ extern float band1Q;
 extern float band2Q;
 extern float highShelfQ;
 
+extern int screenBri;
+
 extern void setLowShelfFreq(float freq);
 extern void setBand1Freq(float freq);
 extern void setBand2Freq(float freq);
@@ -43,15 +45,20 @@ extern void setBand1Q(float q);
 extern void setBand2Q(float q);
 extern void setHighShelfQ(float q);
 
+extern void setScreenBri(float b);
+
 class TestPage : public GUIPage
 {
- protected:
-	 GUIButton GUIButtons[NUM_ELEM];
+protected:
+	int buttonsAm = 13;
+	GUIButton GUIButtons[13];
 
- public:
-	 TestPage();
-	 void update();
-	 void draw(ILI9341_t3 tft);
+public:
+	TestPage() {};
+	void begin(int _xPos, int _yPos);
+	void setTopElem(GUIElement* _elem);
+	void update();
+	void draw(ILI9341_t3 tft);
 };
 
 #endif

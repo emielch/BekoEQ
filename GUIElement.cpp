@@ -10,16 +10,21 @@ GUIElement::GUIElement()
 {
 }
 
-GUIElement::GUIElement(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color)
-	: onPage(_onPage), xPos(_xPos), yPos(_yPos), width( _width), height(_height), color(_color){
-
+void GUIElement::begin(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color, String _name) {
+	onPage = _onPage;
+	xPos = _xPos;
+	yPos = _yPos;
+	width = _width;
+	height = _height;
+	color = _color;
+	name = _name;
 }
 
-void GUIElement::draw(ILI9341_t3 tft){
+void GUIElement::draw(ILI9341_t3 tft) {
 	if (!updateDrawing) return;
 
 	Color col = color;
-	if (selected) col.setHSB(col.hue(),100,100);
+	if (selected) col.setHSB(col.hue(), 100, 100);
 
 	int bgColor = col.getInt();
 
@@ -32,6 +37,7 @@ void GUIElement::select()
 {
 	selected = true;
 	updateDrawing = true;
+	onPage->setSelectedElem(this);
 }
 
 void GUIElement::deselect()
@@ -45,7 +51,7 @@ void GUIElement::inputUp()
 	if (prevElem == NULL) return;
 	deselect();
 	prevElem->select();
-	onPage->selectElem(prevElem);
+	onPage->setSelectedElem(prevElem);
 }
 
 void GUIElement::inputDown()
@@ -53,7 +59,7 @@ void GUIElement::inputDown()
 	if (nextElem == NULL) return;
 	deselect();
 	nextElem->select();
-	onPage->selectElem(nextElem);
+	onPage->setSelectedElem(nextElem);
 }
 
 void GUIElement::inputLeft()
@@ -64,18 +70,18 @@ void GUIElement::inputRight()
 {
 }
 
-int GUIElement::getWidth(){
+int GUIElement::getWidth() {
 	return width;
 }
 
-int GUIElement::getHeight(){
+int GUIElement::getHeight() {
 	return height;
 }
 
-int GUIElement::getXpos(){
+int GUIElement::getXpos() {
 	return xPos;
 }
 
-int GUIElement::getYpos(){
+int GUIElement::getYpos() {
 	return yPos;
 }

@@ -11,20 +11,26 @@
 
 #include "GUIElement.h"
 #include "GUIButton.h"
+#include "NavBar.h"
 
 
 class GUIPage : public Drawable
 {
 protected:
 	GUIElement* selectedElement;
+	
+	int xPos, yPos;
 
 public:
 	GUIPage();
+	String name;
+	void begin(String _name, int _xPos, int _yPos);
+	virtual void setTopElem(GUIElement* _elem);
 
 	virtual void update();
 	using Drawable::draw;
 	virtual void draw(ILI9341_t3 tft);
-	void selectElem(GUIElement* elem);
+	void setSelectedElem(GUIElement* elem);
 
 	void inputUp();
 	void inputDown();

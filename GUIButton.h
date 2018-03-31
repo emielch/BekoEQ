@@ -14,7 +14,6 @@
 class GUIButton : public GUIElement
 {
  protected:
-	 String name;
 	 int tSize;
 	 void(*callback)(float);
 	 unsigned long lastInput = 0;
@@ -23,7 +22,7 @@ class GUIButton : public GUIElement
  public:
 	 
 	 GUIButton();
-	 GUIButton(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color, String _name, int _tSize);
+	 void begin(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color, String _name, int _tSize);
 	 void setName(String _name);
 	 void setCallback(void(*_callback)(float));
 	 void setSource(float* _source);

@@ -2,3 +2,5 @@ __vm/
 Debug/
 *.vcxproj
 *.vcxproj.filters
+*.user
+/Release
