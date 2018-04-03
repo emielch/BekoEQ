@@ -11,7 +11,8 @@ NavBar::NavBar()
 
 void NavBar::begin(GUI* _gui, int _xPos, int _yPos, int _width, int _height, Color _color)
 {
-	GUIElement::begin((GUIPage*)_gui, _xPos, _yPos, _width, _height, _color, "NavBar");
+	Color colSel = Color(_color.hue(), 100, 100, HSB_MODE);
+	GUIElement::begin((GUIPage*)_gui, _xPos, _yPos, _width, _height, _color, colSel, "NavBar");
 	gui = _gui;
 }
 
@@ -32,6 +33,7 @@ void NavBar::draw(ILI9341_t3 tft)
 
 
 	String printText = pages[currentPageID]->name;
+	tft.setFont(Arial_20);
 	int textSize = 3;
 	tft.setTextSize(textSize);
 	tft.setCursor((xPos + width/2) - printText.length() * 3 * textSize, (yPos + height/2) - 4 * textSize);

@@ -9,7 +9,8 @@ GUIButton::GUIButton()
 }
 
 void GUIButton::begin(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color, String _name, int _tSize) {
-	GUIElement::begin(_onPage, _xPos, _yPos, _width, _height, _color, _name);
+	Color colUnsel = Color(_color.hue(), _color.saturation(), 40, HSB_MODE);
+	GUIElement::begin(_onPage, _xPos, _yPos, _width, _height, colUnsel, _color, _name);
 	tSize = _tSize;
 
 }
@@ -34,38 +35,58 @@ void GUIButton::setSource(int* _source)
 	intSource = _source;
 }
 
+void GUIButton::setSource(String * _source)
+{
+	stringSource = _source;
+}
+
 void GUIButton::draw(ILI9341_t3 tft)
 {
-	if (!updateDrawing) return;
+	if (updateDrawing) {
+		GUIElement::draw(tft);
+		tft.setFont(Arial_14);
+		tft.setTextSize(tSize);
+		tft.setCursor(xPos + 4, (yPos + height / 2) - 4 * tSize);
+		tft.println(name);
+		drawVal(tft);
+		updateDrawing = false;
+	}
+	if (updateVal) {
+		drawVal(tft);
+	}
+}
 
-	GUIElement::draw(tft);
+void GUIButton::drawVal(ILI9341_t3 tft) {
+	Color col = color;
+	if (selected) col.setHSB(col.hue(), col.saturation() + 10, col.brightness());
+	else col.setHSB(col.hue(), col.saturation(), col.brightness() - 20);
+	int bgColor = col.getInt();
+	tft.fillRoundRect(xPos + width / 2, yPos, width / 2, height, 4, bgColor);
 
-	int PADDING = 2;
+	String printText = "";
+	if (intSource != NULL) printText += String(*intSource);
+	if (floatSource != NULL) printText += String(*floatSource);
+	if (stringSource != NULL) printText += *stringSource;
 
-	tft.setCursor(xPos + PADDING, yPos + PADDING);
+	tft.setFont(Arial_14);
 	tft.setTextSize(tSize);
-
-	String printText = name;
-	if (intSource != NULL) printText += " " + String(*intSource);
-	if (floatSource != NULL) printText += " " + String(*floatSource);
-
+	tft.setCursor((xPos + width * 0.75) - printText.length() * 3 * tSize, (yPos + height / 2) - 4 * tSize);
 	tft.println(printText);
-
-	updateDrawing = false;
+	updateVal = false;
 }
 
 void GUIButton::inputLeft()
 {
 	if (callback == NULL) return;
 	callback(-1 * accel());
-	updateDrawing = true;
+	updateVal = true;
 }
 
 void GUIButton::inputRight()
 {
 	if (callback == NULL) return;
 	callback(1 * accel());
-	updateDrawing = true;
+	updateVal = true;
 }
 
 float GUIButton::accel()

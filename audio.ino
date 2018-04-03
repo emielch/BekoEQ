@@ -5,62 +5,60 @@
 #include <SerialFlash.h>
 
 // GUItool: begin automatically generated code
-AudioInputI2S            i2s1;           //xy=172,419
-AudioInputUSB            usb_in;           //xy=174,373
-AudioOutputUSB           usb_out;           //xy=288.00010681152344,554.0001621246338
-AudioAnalyzeRMS          rms1;           //xy=299,692
-AudioAnalyzePeak         peak1;          //xy=303.0000190734863,632.0000371932983
-AudioMixer4              mixer4;         //xy=418,418
-AudioMixer4              mixer5;         //xy=419,493
-AudioSynthWaveformDc     inputMult;      //xy=422,561
-AudioEffectMultiply      multiply1;      //xy=629,396
-AudioEffectMultiply      multiply2;      //xy=630,551
-AudioFilterBiquad        biquad2;        //xy=772,552
-AudioFilterBiquad        biquad1;        //xy=784,396
-AudioFilterStateVariable filter3;        //xy=943,588
-AudioFilterStateVariable filter4;        //xy=945,640
-AudioFilterStateVariable filter1;        //xy=946,426
-AudioFilterStateVariable filter2;        //xy=947,484
-AudioMixer4              mixer3;         //xy=1087,269
-AudioMixer4              mixer1;         //xy=1098,414
-AudioMixer4              mixer2;         //xy=1101,573
-AudioOutputI2S           i2s2;           //xy=1296,480
+AudioInputI2S            i2s1;           //xy=195,367
+AudioInputUSB            usb_in;         //xy=197,321
+AudioOutputUSB           usb_out;        //xy=311,502
+AudioAnalyzeRMS          rms1;           //xy=333.0000190734863,631.0000381469727
+AudioMixer4              mixer4;         //xy=441,366
+AudioMixer4              mixer5;         //xy=442,441
+AudioSynthWaveformDc     inputMult;      //xy=445,509
+AudioEffectMultiply      multiply1;      //xy=652,344
+AudioEffectMultiply      multiply2;      //xy=653,499
+AudioFilterBiquad        biquad2;        //xy=795,500
+AudioFilterBiquad        biquad1;        //xy=807,344
+AudioFilterStateVariable filter3;        //xy=966,536
+AudioFilterStateVariable filter4;        //xy=968,588
+AudioFilterStateVariable filter1;        //xy=969,374
+AudioFilterStateVariable filter2;        //xy=970,432
+AudioMixer4              mixer3;         //xy=1110,217
+AudioMixer4              mixer1;         //xy=1121,362
+AudioMixer4              mixer2;         //xy=1124,521
+AudioOutputI2S           i2s2;           //xy=1319,428
+AudioAnalyzePeak         peakOut_left;          //xy=1324.0000762939453,351.00002098083496
+AudioAnalyzePeak         peakOut_right;          //xy=1327.0000762939453,523.0000324249268
 AudioConnection          patchCord1(i2s1, 0, mixer4, 0);
 AudioConnection          patchCord2(i2s1, 0, usb_out, 0);
 AudioConnection          patchCord3(i2s1, 1, usb_out, 1);
 AudioConnection          patchCord4(i2s1, 1, mixer5, 0);
-AudioConnection          patchCord5(i2s1, 1, peak1, 0);
-AudioConnection          patchCord6(i2s1, 1, rms1, 0);
-AudioConnection          patchCord7(usb_in, 0, mixer4, 1);
-AudioConnection          patchCord8(usb_in, 1, mixer5, 1);
-AudioConnection          patchCord9(mixer4, 0, multiply1, 0);
-AudioConnection          patchCord10(mixer5, 0, multiply2, 0);
-AudioConnection          patchCord11(inputMult, 0, multiply1, 1);
-AudioConnection          patchCord12(inputMult, 0, multiply2, 1);
-AudioConnection          patchCord13(multiply1, biquad1);
-AudioConnection          patchCord14(multiply2, biquad2);
-AudioConnection          patchCord15(biquad2, 0, mixer2, 0);
-AudioConnection          patchCord16(biquad2, 0, filter3, 0);
-AudioConnection          patchCord17(biquad2, 0, filter4, 0);
-AudioConnection          patchCord18(biquad1, 0, filter1, 0);
-AudioConnection          patchCord19(biquad1, 0, filter2, 0);
-AudioConnection          patchCord20(biquad1, 0, mixer1, 0);
-AudioConnection          patchCord21(filter3, 0, mixer3, 2);
-AudioConnection          patchCord22(filter3, 1, mixer2, 1);
-AudioConnection          patchCord23(filter4, 0, mixer3, 3);
-AudioConnection          patchCord24(filter4, 1, mixer2, 2);
-AudioConnection          patchCord25(filter1, 0, mixer3, 0);
-AudioConnection          patchCord26(filter1, 1, mixer1, 1);
-AudioConnection          patchCord27(filter2, 0, mixer3, 1);
-AudioConnection          patchCord28(filter2, 1, mixer1, 2);
-AudioConnection          patchCord29(mixer1, 0, i2s2, 0);
+AudioConnection          patchCord5(i2s1, 1, rms1, 0);
+AudioConnection          patchCord6(usb_in, 0, mixer4, 1);
+AudioConnection          patchCord7(usb_in, 1, mixer5, 1);
+AudioConnection          patchCord8(mixer4, 0, multiply1, 0);
+AudioConnection          patchCord9(mixer5, 0, multiply2, 0);
+AudioConnection          patchCord10(inputMult, 0, multiply1, 1);
+AudioConnection          patchCord11(inputMult, 0, multiply2, 1);
+AudioConnection          patchCord12(multiply1, biquad1);
+AudioConnection          patchCord13(multiply2, biquad2);
+AudioConnection          patchCord14(biquad2, 0, mixer2, 0);
+AudioConnection          patchCord15(biquad2, 0, filter3, 0);
+AudioConnection          patchCord16(biquad2, 0, filter4, 0);
+AudioConnection          patchCord17(biquad1, 0, filter1, 0);
+AudioConnection          patchCord18(biquad1, 0, filter2, 0);
+AudioConnection          patchCord19(biquad1, 0, mixer1, 0);
+AudioConnection          patchCord20(filter3, 0, mixer3, 2);
+AudioConnection          patchCord21(filter3, 1, mixer2, 1);
+AudioConnection          patchCord22(filter4, 0, mixer3, 3);
+AudioConnection          patchCord23(filter4, 1, mixer2, 2);
+AudioConnection          patchCord24(filter1, 0, mixer3, 0);
+AudioConnection          patchCord25(filter1, 1, mixer1, 1);
+AudioConnection          patchCord26(filter2, 0, mixer3, 1);
+AudioConnection          patchCord27(filter2, 1, mixer1, 2);
+AudioConnection          patchCord28(mixer1, 0, i2s2, 0);
+AudioConnection          patchCord29(mixer1, peakOut_left);
 AudioConnection          patchCord30(mixer2, 0, i2s2, 1);
-AudioControlSGTL5000     sgtl5000_1;     //xy=555,157
+AudioConnection          patchCord31(mixer2, peakOut_right);
+AudioControlSGTL5000     sgtl5000_1;     //xy=578,105
 // GUItool: end automatically generated code
-
-
-
-
 
 float lowShelfFreq = 200;
 float band1Freq = 500;
@@ -78,8 +76,12 @@ float band2Q = 0.7;
 float highShelfQ = 1;
 
 unsigned long lastNoiseThresh = 0;
-bool inputOn = true;
-float input_gain = 1;
+float jackIn_gain = 1;
+
+float USBIn_gain = 1;
+
+float peakOutLeftVal = 0;
+float peakOutRightVal = 0;
 
 
 void setupAudio() {
@@ -96,37 +98,43 @@ void setupAudio() {
 	updateHighShelf();
 }
 
-void updateAudio() {
-	float usb_vol = usb_in.volume();
-	mixer4.gain(1, usb_vol * 2);
-	mixer5.gain(1, usb_vol * 2);
+void updateAudio(float dt) {
+	if (peakOut_left.available() && peakOut_right.available()) {
+		peakOutLeftVal = peakOut_left.read();
+		peakOutRightVal = peakOut_right.read();
+	}
 
-	if (rms1.available()) {
+	if (rms1.available() && jackSetting == 0) {
 		float rms_val = rms1.read() * 1000;
 		if (rms_val > 1.0) {
 			lastNoiseThresh = millis();
-			if (!inputOn) inputOn = true;
+			if (!jackInOn) jackInOn = true;
 		}
-		if (millis() - lastNoiseThresh > 20000 && inputOn) inputOn = false;
+		if (millis() - lastNoiseThresh > 5000 && jackInOn) jackInOn = false;
 	}
 
-	if (inputOn) {
-		if (input_gain < 1.0) {
-			input_gain += 0.0001;
-			updateInputGain();
-		}
+	if (jackInOn && jackIn_gain < 1.0) {
+		jackIn_gain += 0.01*dt;
+		updateInputGain(0, jackIn_gain);
 	}
-	else {
-		if (input_gain > 0.0) {
-			input_gain -= 0.0001;
-			updateInputGain();
-		}
+	else if (!jackInOn && jackIn_gain > 0.0) {
+		jackIn_gain -= 0.01*dt;
+		updateInputGain(0, jackIn_gain);
 	}
+
+	float usb_vol = usb_in.volume()*4;
+	if (USBInOn && USBIn_gain < 1.0) {
+		USBIn_gain += 0.01*dt;
+	}
+	else if (!USBInOn && USBIn_gain > 0.0) {
+		USBIn_gain -= 0.01*dt;
+	}
+	updateInputGain(1, USBIn_gain*usb_vol);
 }
 
-void updateInputGain() {
-	mixer4.gain(0, input_gain);
-	mixer5.gain(0, input_gain);
+void updateInputGain(int channel, float val) {
+	mixer4.gain(channel, val);
+	mixer5.gain(channel, val);
 }
 
 void updateLowShelf() {

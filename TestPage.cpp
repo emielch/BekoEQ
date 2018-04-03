@@ -6,7 +6,7 @@
 
 void TestPage::begin(int _xPos, int _yPos){
 
-	GUIPage::begin("Test", _xPos, _yPos);
+	GUIPage::begin("EQ", _xPos, _yPos);
 	for (int i = 0; i < buttonsAm; i++) {
 		GUIButtons[i].begin(this, xPos + 10, yPos + 10 + 25 * i, 220, 20, Color(240, 20, 50, HSB_MODE), "Test", 2);
 		if (i == 0) GUIButtons[i].prevElem = NULL;
@@ -63,10 +63,6 @@ void TestPage::begin(int _xPos, int _yPos){
 	GUIButtons[11].setCallback(setHighShelfQ);
 	GUIButtons[11].setSource(&highShelfQ);
 	GUIButtons[11].setName("highQ");
-
-	GUIButtons[12].setCallback(setScreenBri);
-	GUIButtons[12].setSource(&screenBri);
-	GUIButtons[12].setName("Bri");
 }
 
 void TestPage::setTopElem(GUIElement* _elem) {

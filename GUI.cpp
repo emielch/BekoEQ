@@ -12,13 +12,16 @@ GUI::GUI() {
 	tft.setTextWrap(false);
 	tft.setTextSize(2);
 	pinMode(BACKLIGHT, OUTPUT);
-	analogWrite(BACKLIGHT, backlightPower);
-	screenSwitch(true);
+	setBacklightPower(1);
 	tft.fillScreen(ILI9341_BLACK);
 
-	notifyBar.begin(0, 20, Color(0, 20, 50, HSB_MODE));
-	navBar.begin(this, 0, 20, tft.width(), 30, Color(0, 0, 50, HSB_MODE));
-	topBarHeight = 20 + navBar.getHeight();
+	topBarHeight = 0;
+	notifyBar.begin(0, 25, Color(100, 0, 60, HSB_MODE));
+	audioLevelLeft.begin(0, topBarHeight += notifyBar.getHeight() + 1, tft.width(), 3, Color(0, 0, 0, RGB_MODE));
+	audioLevelRight.begin(0, topBarHeight += audioLevelLeft.getHeight() + 1, tft.width(), 3, Color(0, 0, 0, RGB_MODE));
+	navBar.begin(this, 0, topBarHeight += audioLevelRight.getHeight() + 1, tft.width(), 30, Color(220, 20, 30, HSB_MODE));
+	topBarHeight += navBar.getHeight();
+
 	testPage.begin(0, topBarHeight);
 	settingsPage.begin(0, topBarHeight);
 	pages[0] = &testPage;
@@ -28,12 +31,15 @@ GUI::GUI() {
 	testPage.setTopElem(&navBar);
 	settingsPage.setTopElem(&navBar);
 
+	audioLevelLeft.setSource(&peakOutLeftVal);
+	audioLevelRight.setSource(&peakOutRightVal);
+
 	switchPage(&testPage);
 }
 
-void GUI::screenSwitch(bool on)
+void GUI::setBacklightPower(float val)
 {
-	screenOn = on;
+	backlightPowerSetpoint = val;
 }
 
 void GUI::setScreenBri(int bri)
@@ -42,23 +48,39 @@ void GUI::setScreenBri(int bri)
 	analogWrite(BACKLIGHT, backlightPower*screenBri);
 }
 
-void GUI::update()
+void GUI::update(float dt)
 {
-	if (screenOn) {
-		if (backlightPower < 1) {
-			backlightPower += 0.0001;
-			analogWrite(BACKLIGHT, backlightPower*screenBri);
-		}
-		if (millis() > lastInput + 8000) screenSwitch(false);
+	updateScreenBri(dt);
+
+	if (backlightPower > 0.01) {
 		currentPage->update();
 		notifyBar.update();
 		navBar.update();
+		audioLevelLeft.update(dt);
+		audioLevelRight.update(dt);
 	}
-	else {
-		if (backlightPower > 0) {
-			backlightPower -= 0.0001;
-			analogWrite(BACKLIGHT, backlightPower*screenBri);
+}
+
+void GUI::updateScreenBri(float dt)
+{
+	if (backlightPowerSetpoint == 1) {
+		if (millis() > lastInput + 10000) setBacklightPower(0.05);
+	}
+	else if (backlightPowerSetpoint > 0) {
+		if (millis() > lastInput + 15000) setBacklightPower(0);
+	}
+
+	if (backlightPower != backlightPowerSetpoint) {
+		if (backlightPowerSetpoint > backlightPower) {
+			backlightPower += 0.01*dt;
+			if (backlightPower > backlightPowerSetpoint) backlightPower = backlightPowerSetpoint;
 		}
+		else if (backlightPowerSetpoint < backlightPower) {
+			backlightPower -= 0.01*dt;
+			if (backlightPower < backlightPowerSetpoint) backlightPower = backlightPowerSetpoint;
+		}
+
+		analogWrite(BACKLIGHT, ceil(backlightPower*screenBri));
 	}
 }
 
@@ -66,23 +88,27 @@ void GUI::draw()
 {
 	notifyBar.draw(tft);
 	navBar.draw(tft);
+	audioLevelLeft.draw(tft);
+	audioLevelRight.draw(tft);
 	currentPage->draw(tft);
 }
 
 bool GUI::inputBlock()
 {
 	lastInput = millis();
-	if (!screenOn) {
-		screenSwitch(true);
+
+	if (backlightPowerSetpoint < 0.01) {
 		lastTimeoutInput = lastInput;
 	}
+
+	setBacklightPower(1);
 
 	if (lastInput - lastTimeoutInput < 300) {
 		lastTimeoutInput = lastInput;
 		return true;
 	}
 
-	return !screenOn;
+	return false;
 }
 
 void GUI::inputUp(int val)

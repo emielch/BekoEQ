@@ -16,21 +16,21 @@ void SettingsPage::begin(int _xPos, int _yPos) {
 	}
 
 
-	//GUIButtons[0].setCallback(setLowShelfFreq);
-	//GUIButtons[0].setSource(&lowShelfFreq);
-	//GUIButtons[0].setName("lowFreq");
+	GUIButtons[0].setCallback(setScreenBri);
+	GUIButtons[0].setSource(&labelScreenBri);
+	GUIButtons[0].setName("Brightness");
 
-	//GUIButtons[1].setCallback(setBand1Freq);
-	//GUIButtons[1].setSource(&band1Freq);
-	//GUIButtons[1].setName("band1Freq");
+	GUIButtons[1].setCallback(setJackIn);
+	GUIButtons[1].setSource(&labelJackIn);
+	GUIButtons[1].setName("Jack In");
 
-	//GUIButtons[2].setCallback(setBand2Freq);
-	//GUIButtons[2].setSource(&band2Freq);
-	//GUIButtons[2].setName("band2Freq");
+	GUIButtons[2].setCallback(setUSBIn);
+	GUIButtons[2].setSource(&labelUSBIn);
+	GUIButtons[2].setName("USB In");
 
-	//GUIButtons[3].setCallback(setHighShelfFreq);
-	//GUIButtons[3].setSource(&highShelfFreq);
-	//GUIButtons[3].setName("highFreq");
+	GUIButtons[3].setCallback(setSpeaker);
+	GUIButtons[3].setSource(&labelSpeaker);
+	GUIButtons[3].setName("Speaker");
 }
 
 void SettingsPage::setTopElem(GUIElement* _elem) {

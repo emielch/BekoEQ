@@ -10,6 +10,7 @@
 #endif
 
 #include "Drawable.h"
+#include <font_Arial.h>
 #include "Color.h"
 
 class GUIPage;
@@ -17,17 +18,16 @@ class GUIPage;
 class GUIElement : public Drawable {
 protected:
 	int xPos, yPos, width, height;
-	int* intSource = NULL;
-	float* floatSource = NULL;
 	boolean selected = false;
 	GUIPage* onPage;
 	Color color;
+	Color colorSelect;
 	String name;
 
 
 public:
 	GUIElement();
-	void begin(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color, String _name);
+	void begin(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color, Color _colorSel, String _name);
 
 	using Drawable::draw;
 	virtual void draw(ILI9341_t3 tft);

@@ -28,8 +28,6 @@ extern float band1Q;
 extern float band2Q;
 extern float highShelfQ;
 
-extern int screenBri;
-
 extern void setLowShelfFreq(float freq);
 extern void setBand1Freq(float freq);
 extern void setBand2Freq(float freq);
@@ -45,13 +43,11 @@ extern void setBand1Q(float q);
 extern void setBand2Q(float q);
 extern void setHighShelfQ(float q);
 
-extern void setScreenBri(float b);
-
 class TestPage : public GUIPage
 {
 protected:
-	int buttonsAm = 13;
-	GUIButton GUIButtons[13];
+	const static int buttonsAm = 12;
+	GUIButton GUIButtons[buttonsAm];
 
 public:
 	TestPage() {};

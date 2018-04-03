@@ -14,9 +14,14 @@
 class GUIButton : public GUIElement
 {
  protected:
+	 bool updateVal = true;
 	 int tSize;
+	 int* intSource = NULL;
+	 float* floatSource = NULL;
+	 String* stringSource = NULL;
 	 void(*callback)(float);
 	 unsigned long lastInput = 0;
+	 void drawVal(ILI9341_t3 tft);
 	 
 
  public:
@@ -27,6 +32,7 @@ class GUIButton : public GUIElement
 	 void setCallback(void(*_callback)(float));
 	 void setSource(float* _source);
 	 void setSource(int* _source);
+	 void setSource(String* _source);
 
 	 using GUIElement::draw;
 	 void draw(ILI9341_t3 tft);

@@ -11,6 +11,19 @@
 
 #include "GUIPage.h"
 
+extern String labelScreenBri;
+extern void setScreenBri(float b);
+
+extern void setJackIn(float b);
+extern String labelJackIn;
+
+extern void setUSBIn(float b);
+extern String labelUSBIn;
+
+extern void setSpeaker(float b);
+extern String labelSpeaker;
+
+
 class SettingsPage : public GUIPage
 {
 protected:

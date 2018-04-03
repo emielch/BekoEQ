@@ -5,6 +5,7 @@
 */
 
 
+#include "AudioLevelBar.h"
 #include "SettingsPage.h"
 #include "NotifyBar.h"
 #include "NavBar.h"
@@ -15,26 +16,29 @@
 #include "GUI.h"
 #include "GUIElement.h"
 
+#define SPEAKER_ENABLE 6
+
 GUI gui;
 elapsedMillis sinceNext;
+unsigned long previousMicros = 0;
 
 void setup() {
 	setupAudio();
+	pinMode(SPEAKER_ENABLE, OUTPUT);
+	setSpeaker(1);
 }
 
 
 void loop() {
-	updateEncoders();
-	updateAudio();
+	long newMicros = micros();
+	uint_fast16_t elapsed = newMicros - previousMicros;
+	previousMicros = newMicros;
+	float dt = elapsed * (100.0f / 1000000);  // 1.0==exactly 100fps. 4.0==25fps, 4x slower
 
-	gui.update();
+	updateEncoders();
+	updateAudio(dt);
+
+	gui.update(dt);
 	gui.draw();
 }
 
-int screenBri = 20;
-void setScreenBri(float b) {
-	screenBri += b;
-	if (screenBri < 5) screenBri = 5;
-	else if (screenBri > 255) screenBri = 255;
-	gui.setScreenBri(screenBri);
-}

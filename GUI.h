@@ -11,8 +11,10 @@
 
 #include "SPI.h"
 #include "ILI9341_t3.h"
+#include <font_Arial.h>
 #include "NavBar.h"
 #include "NotifyBar.h"
+#include "AudioLevelBar.h"
 #include "GUIPage.h"
 #include "TestPage.h"
 #include "SettingsPage.h"
@@ -26,6 +28,8 @@
 #define TFT_MISO    12
 #define BACKLIGHT   3
 
+extern float peakOutLeftVal;
+extern float peakOutRightVal;
 
 
 class GUI : public GUIPage
@@ -35,9 +39,13 @@ protected:
 	GUIPage* currentPage;
 	NavBar navBar;
 	NotifyBar notifyBar;
-	unsigned int lastInput = 0;
-	unsigned int lastTimeoutInput = 0;
-	bool screenOn;
+	AudioLevelBar audioLevelLeft;
+	AudioLevelBar audioLevelRight;
+	unsigned long lastInput = 0;
+	unsigned long lastTimeoutInput = 0;
+
+	void updateScreenBri(float dt);
+	float backlightPowerSetpoint = 1;
 	float backlightPower = 0;
 	byte screenBri = 20;
 	int topBarHeight;
@@ -50,9 +58,9 @@ protected:
 
 public:
 	GUI();
-	void screenSwitch(bool on);
+	void setBacklightPower(float val);
 	void setScreenBri(int bri);
-	void update();
+	void update(float dt);
 	void draw();
 	bool inputBlock();
 
