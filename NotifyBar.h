@@ -16,16 +16,18 @@
 extern bool jackInOn;
 extern bool USBInOn;
 extern bool speakerOn;
+extern float batVolt;
 
 class NotifyBar : public Drawable
 {
 protected:
 	GUIElement * selectedElement;
-	bool updateAudioLevels = true;
+	bool updateBatVoltTxt = true;
+	int batVoltRound = 0;
 	int yPos, height;
 	Color color;
 
-	bool _jackInOn, _USBInOn, _speakerOn;
+	bool _jackInOn, _USBInOn, _speakerOn, _batteryOn;
 
 public:
 	NotifyBar();

@@ -30,5 +30,24 @@ void updateEncoders() {
 	}
 }
 
+bool button1pressed = false;
+bool button2pressed = false;
+void button1isr() {
+	button1pressed = true;
+}
+void button2isr() {
+	button2pressed = true;
+}
+
+void updateButtons() {
+	if (button1pressed) {
+		gui.inputRight(1);
+		button1pressed = false;
+	}
+	if (button2pressed) {
+		gui.inputLeft(1);
+		button2pressed = false;
+	}
+}
 
 

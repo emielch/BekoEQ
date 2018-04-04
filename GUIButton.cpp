@@ -68,9 +68,13 @@ void GUIButton::drawVal(ILI9341_t3 tft) {
 	if (floatSource != NULL) printText += String(*floatSource);
 	if (stringSource != NULL) printText += *stringSource;
 
-	tft.setFont(Arial_14);
-	tft.setTextSize(tSize);
-	tft.setCursor((xPos + width * 0.75) - printText.length() * 3 * tSize, (yPos + height / 2) - 4 * tSize);
+	char copy[50];
+	printText.toCharArray(copy, 50);
+	if(selected) tft.setFont(Arial_14_Bold);
+	else tft.setFont(Arial_14);
+	int textPixelLen = tft.strPixelLen(copy);
+	tft.setCursor((xPos + width * 0.75) - textPixelLen / 2, (yPos + height / 2) - 8);
+
 	tft.println(printText);
 	updateVal = false;
 }

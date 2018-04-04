@@ -3,6 +3,7 @@ bool jackInOn = true;
 bool USBInOn = true;
 bool speakerOn = true;
 
+float batVolt = 0;
 
 
 int screenBri = 20;
@@ -17,6 +18,14 @@ void setScreenBri(float b) {
 	labelScreenBri = String(screenBri / 2.55, 0) + "%";
 }
 
+elapsedMillis timeSinceBatRead = 0;
+void updateBatVolt() {
+	if (timeSinceBatRead > 100) {
+		timeSinceBatRead -= 100;
+		float newBatVolt = (analogRead(BAT_SENSE) / 4096.) * 3.3 * 2 - 0.84;
+		batVolt = batVolt * 0.9 + newBatVolt * 0.1;
+	}
+}
 
 
 int jackSetting = 0;

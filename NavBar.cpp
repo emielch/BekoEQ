@@ -33,11 +33,11 @@ void NavBar::draw(ILI9341_t3 tft)
 
 
 	String printText = pages[currentPageID]->name;
-	tft.setFont(Arial_20);
-	int textSize = 3;
-	tft.setTextSize(textSize);
-	tft.setCursor((xPos + width/2) - printText.length() * 3 * textSize, (yPos + height/2) - 4 * textSize);
-	//tft.setCursor(xPos+width - printText.length() * 6 * textSize, yPos+height - 8 * textSize);	
+	char copy[50];
+	printText.toCharArray(copy, 50);
+	tft.setFont(Arial_20_Bold);
+	int textPixelLen = tft.strPixelLen(copy);
+	tft.setCursor((xPos + width/2) - textPixelLen/2, (yPos + height/2) - 12);
 
 	tft.println(printText);
 

@@ -106,7 +106,7 @@ void updateAudio(float dt) {
 
 	if (rms1.available() && jackSetting == 0) {
 		float rms_val = rms1.read() * 1000;
-		if (rms_val > 1.0) {
+		if (rms_val > 2.0) {
 			lastNoiseThresh = millis();
 			if (!jackInOn) jackInOn = true;
 		}
@@ -122,7 +122,7 @@ void updateAudio(float dt) {
 		updateInputGain(0, jackIn_gain);
 	}
 
-	float usb_vol = usb_in.volume()*4;
+	float usb_vol = usb_in.volume()*10;
 	if (USBInOn && USBIn_gain < 1.0) {
 		USBIn_gain += 0.01*dt;
 	}

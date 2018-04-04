@@ -11,6 +11,7 @@
 
 #include "Drawable.h"
 #include <font_Arial.h>
+#include <font_ArialBold.h>
 #include "Color.h"
 
 class GUIPage;
