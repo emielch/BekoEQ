@@ -12,15 +12,15 @@
 #include "GUIPage.h"
 
 extern String labelScreenBri;
-extern void setScreenBri(float b);
+extern void setScreenBri(float b, void* page);
 
-extern void setJackIn(float b);
+extern void setJackIn(float b, void* page);
 extern String labelJackIn;
 
-extern void setUSBIn(float b);
+extern void setUSBIn(float b, void* page);
 extern String labelUSBIn;
 
-extern void setSpeaker(float b);
+extern void setSpeaker(float b, void* page);
 extern String labelSpeaker;
 
 
@@ -32,7 +32,7 @@ protected:
 
 public:
 	SettingsPage() {};
-	void begin(int _xPos, int _yPos);
+	void begin(int _xPos, int _yPos, int _width, int _height);
 	void setTopElem(GUIElement * _elem);
 	void update();
 	void draw(ILI9341_t3 tft);

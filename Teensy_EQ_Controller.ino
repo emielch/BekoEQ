@@ -5,21 +5,28 @@
 */
 
 
+#include "EQSubPage.h"
+#include "EQPage.h"
 #include "AudioLevelBar.h"
 #include "SettingsPage.h"
 #include "NotifyBar.h"
 #include "NavBar.h"
 #include "GUIButton.h"
 #include "Drawable.h"
-#include "TestPage.h"
 #include "GUIPage.h"
 #include "GUI.h"
 #include "GUIElement.h"
+
+#include <Bounce.h>
 
 #define SPEAKER_ENABLE 6
 #define BUTTON_1 8
 #define BUTTON_2 17
 #define BAT_SENSE 15
+
+Bounce button1 = Bounce(BUTTON_1, 10);  // 10 ms debounce
+Bounce button2 = Bounce(BUTTON_2, 10);  // 10 ms debounce
+
 
 GUI gui;
 elapsedMillis sinceNext;
@@ -32,9 +39,7 @@ void setup() {
 	pinMode(BAT_SENSE, INPUT);
 	pinMode(BUTTON_1, INPUT);
 	pinMode(BUTTON_2, INPUT);
-	attachInterrupt(BUTTON_1, button1isr, RISING);
-	attachInterrupt(BUTTON_2, button2isr, RISING);
-	setSpeaker(1);
+	setSpeaker(1,NULL);
 }
 
 

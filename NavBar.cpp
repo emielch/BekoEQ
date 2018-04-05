@@ -32,7 +32,7 @@ void NavBar::draw(ILI9341_t3 tft)
 	GUIElement::draw(tft);
 
 
-	String printText = pages[currentPageID]->name;
+	String printText = pages[currentPageIndex]->getName();
 	char copy[50];
 	printText.toCharArray(copy, 50);
 	tft.setFont(Arial_20_Bold);
@@ -44,18 +44,22 @@ void NavBar::draw(ILI9341_t3 tft)
 	updateDrawing = false;
 }
 
-void NavBar::inputLeft()
+bool NavBar::inputLeft()
 {
-	if (currentPageID == pageAm - 1) return;
-	currentPageID++;
-	gui->switchPage(pages[currentPageID]);
-	updateDrawing = true;
+	if (currentPageIndex == 0) return false;
+	goToPageIndex(currentPageIndex - 1);
+	return true;
 }
 
-void NavBar::inputRight()
+bool NavBar::inputRight()
 {
-	if (currentPageID == 0) return;
-	currentPageID--;
-	gui->switchPage(pages[currentPageID]);
+	if (currentPageIndex == pageAm - 1) return false;
+	goToPageIndex(currentPageIndex +1);
+	return true;
+}
+
+void NavBar::goToPageIndex(int idx) {
+	currentPageIndex = idx;
+	gui->switchPage(pages[currentPageIndex]);
 	updateDrawing = true;
 }

@@ -21,7 +21,7 @@ protected:
 	GUI * gui;
 	int pageAm;
 	GUIPage** pages;
-	int currentPageID = 0;
+	int currentPageIndex = 0;
 
 public:
 	NavBar();
@@ -31,8 +31,9 @@ public:
 	void update();
 	void draw(ILI9341_t3 tft);
 
-	void inputLeft();
-	void inputRight();
+	bool inputLeft();
+	bool inputRight();
+	void goToPageIndex(int idx);
 };
 
 

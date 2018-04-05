@@ -175,28 +175,28 @@ void updateHighShelf() {
 
 
 // FREQ
-void setLowShelfFreq(float freq) {
+void setLowShelfFreq(float freq, void* page) {
 	lowShelfFreq += lowShelfFreq * 0.03 * freq;
 	if (lowShelfFreq < 0.1)lowShelfFreq = 0.1;
 	else if (lowShelfFreq > 22050)lowShelfFreq = 22050;
 	updateLowShelf();
 }
 
-void setBand1Freq(float freq) {
+void setBand1Freq(float freq, void* page) {
 	band1Freq += band1Freq * 0.03 * freq;;
 	if (band1Freq < 0.1)band1Freq = 0.1;
 	else if (band1Freq > 22050)band1Freq = 22050;
 	updateBand1();
 }
 
-void setBand2Freq(float freq) {
+void setBand2Freq(float freq, void* page) {
 	band2Freq += band2Freq * 0.03 * freq;;
 	if (band2Freq < 0.1)band2Freq = 0.1;
 	else if (band2Freq > 22050)band2Freq = 22050;
 	updateBand2();
 }
 
-void setHighShelfFreq(float freq) {
+void setHighShelfFreq(float freq, void* page) {
 	highShelfFreq += highShelfFreq * 0.03 * freq;;
 	if (highShelfFreq < 0.1)highShelfFreq = 0.1;
 	else if (highShelfFreq > 22050)highShelfFreq = 22050;
@@ -204,52 +204,52 @@ void setHighShelfFreq(float freq) {
 }
 
 // GAIN
-void setLowShelfGain(float gain) {
+void setLowShelfGain(float gain, void* page) {
 	lowShelfGain += gain * 0.3;
 	updateLowShelf();
 }
 
-void setBand1Gain(float gain) {
+void setBand1Gain(float gain, void* page) {
 	band1Gain += gain * 0.3;
 	if (band1Gain < 0)band1Gain = 0;
 	else if (band1Gain > 20)band1Gain = 20;
 	updateBand1();
 }
 
-void setBand2Gain(float gain) {
+void setBand2Gain(float gain, void* page) {
 	band2Gain += gain * 0.3;
 	if (band2Gain < 0)band2Gain = 0;
 	else if (band2Gain > 20)band2Gain = 20;
 	updateBand2();
 }
 
-void setHighShelfGain(float gain) {
+void setHighShelfGain(float gain, void* page) {
 	highShelfGain += gain * 0.3;
 	updateHighShelf();
 }
 
 
 // Q
-void setLowShelfQ(float q) {
+void setLowShelfQ(float q, void* page) {
 	lowShelfQ += q * 0.3;
 	updateLowShelf();
 }
 
-void setBand1Q(float q) {
+void setBand1Q(float q, void* page) {
 	band1Q += q * 0.3;
 	if (band1Q < 0.7)band1Q = 0.7;
 	else if (band1Q > 5)band1Q = 5;
 	updateBand1();
 }
 
-void setBand2Q(float q) {
+void setBand2Q(float q, void* page) {
 	band2Q += q * 0.3;
 	if (band2Q < 0.7)band2Q = 0.7;
 	else if (band2Q > 5)band2Q = 5;
 	updateBand2();
 }
 
-void setHighShelfQ(float q) {
+void setHighShelfQ(float q, void* page) {
 	highShelfQ += q * 0.3;
 	updateHighShelf();
 }

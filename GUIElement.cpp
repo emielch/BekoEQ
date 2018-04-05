@@ -44,29 +44,30 @@ void GUIElement::deselect()
 {
 	selected = false;
 	updateDrawing = true;
+	onPage->setSelectedElem(NULL);
 }
 
-void GUIElement::inputUp()
+bool GUIElement::inputUp()
 {
-	if (prevElem == NULL) return;
+	if (prevElem == NULL) return false;
 	deselect();
 	prevElem->select();
-	onPage->setSelectedElem(prevElem);
+	return true;
 }
 
-void GUIElement::inputDown()
+bool GUIElement::inputDown()
 {
-	if (nextElem == NULL) return;
+	if (nextElem == NULL) return false;
 	deselect();
 	nextElem->select();
-	onPage->setSelectedElem(nextElem);
+	return true;
 }
 
-void GUIElement::inputLeft()
+bool GUIElement::inputLeft()
 {
 }
 
-void GUIElement::inputRight()
+bool GUIElement::inputRight()
 {
 }
 

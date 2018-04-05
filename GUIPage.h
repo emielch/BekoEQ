@@ -19,23 +19,25 @@ class GUIPage : public Drawable
 protected:
 	GUIElement* selectedElement;
 	
-	int xPos, yPos;
+	int xPos, yPos, width, height;
+	String name;
 
 public:
 	GUIPage();
-	String name;
-	void begin(String _name, int _xPos, int _yPos);
+	void begin(String _name, int _xPos, int _yPos, int _width, int _height);
 	virtual void setTopElem(GUIElement* _elem);
 
 	virtual void update();
 	using Drawable::draw;
 	virtual void draw(ILI9341_t3 tft);
 	void setSelectedElem(GUIElement* elem);
+	void setName(String _name);
+	String getName();
 
-	void inputUp();
-	void inputDown();
-	void inputLeft();
-	void inputRight();
+	virtual bool inputUp();
+	virtual bool inputDown();
+	virtual bool inputLeft();
+	virtual bool inputRight();
 
 	virtual void buttonPress(int val);
 };

@@ -19,7 +19,8 @@ class GUIButton : public GUIElement
 	 int* intSource = NULL;
 	 float* floatSource = NULL;
 	 String* stringSource = NULL;
-	 void(*callback)(float);
+	 void(*callback)(float,void*);
+	 void* callback_page;
 	 unsigned long lastInput = 0;
 	 void drawVal(ILI9341_t3 tft);
 	 
@@ -29,7 +30,7 @@ class GUIButton : public GUIElement
 	 GUIButton();
 	 void begin(GUIPage* _onPage, int _xPos, int _yPos, int _width, int _height, Color _color, String _name, int _tSize);
 	 void setName(String _name);
-	 void setCallback(void(*_callback)(float));
+	 void setCallback(void(*_callback)(float, void *), void * _page);
 	 void setSource(float* _source);
 	 void setSource(int* _source);
 	 void setSource(String* _source);
@@ -37,8 +38,8 @@ class GUIButton : public GUIElement
 	 using GUIElement::draw;
 	 void draw(ILI9341_t3 tft);
 
-	 void inputLeft();
-	 void inputRight();
+	 bool inputLeft();
+	 bool inputRight();
 
 	 float accel();
 	

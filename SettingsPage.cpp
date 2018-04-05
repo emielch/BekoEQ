@@ -4,9 +4,9 @@
 
 #include "SettingsPage.h"
 
-void SettingsPage::begin(int _xPos, int _yPos) {
+void SettingsPage::begin(int _xPos, int _yPos, int _width, int _height) {
 
-	GUIPage::begin("Settings", _xPos, _yPos);
+	GUIPage::begin("Settings", _xPos, _yPos, _width, _height);
 	for (int i = 0; i < buttonsAm; i++) {
 		GUIButtons[i].begin(this, xPos + 10, yPos + 10 + 25 * i, 220, 20, Color(240, 20, 50, HSB_MODE), "Test", 2);
 		if (i == 0) GUIButtons[i].prevElem = NULL;
@@ -16,19 +16,19 @@ void SettingsPage::begin(int _xPos, int _yPos) {
 	}
 
 
-	GUIButtons[0].setCallback(setScreenBri);
+	GUIButtons[0].setCallback(setScreenBri, this);
 	GUIButtons[0].setSource(&labelScreenBri);
 	GUIButtons[0].setName("Brightness");
 
-	GUIButtons[1].setCallback(setJackIn);
+	GUIButtons[1].setCallback(setJackIn, this);
 	GUIButtons[1].setSource(&labelJackIn);
 	GUIButtons[1].setName("Jack In");
 
-	GUIButtons[2].setCallback(setUSBIn);
+	GUIButtons[2].setCallback(setUSBIn, this);
 	GUIButtons[2].setSource(&labelUSBIn);
 	GUIButtons[2].setName("USB In");
 
-	GUIButtons[3].setCallback(setSpeaker);
+	GUIButtons[3].setCallback(setSpeaker, this);
 	GUIButtons[3].setSource(&labelSpeaker);
 	GUIButtons[3].setName("Speaker");
 }

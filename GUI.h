@@ -16,7 +16,7 @@
 #include "NotifyBar.h"
 #include "AudioLevelBar.h"
 #include "GUIPage.h"
-#include "TestPage.h"
+#include "EQPage.h"
 #include "SettingsPage.h"
 
 // For the Adafruit shield, these are the default.
@@ -50,8 +50,8 @@ protected:
 	byte screenBri = 20;
 	int topBarHeight;
 
-	TestPage testPage;
 	SettingsPage settingsPage;
+	EQPage eqPage;
 
 	static const int pageAm = 2;
 	GUIPage* pages[pageAm];

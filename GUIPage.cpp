@@ -9,10 +9,12 @@ GUIPage::GUIPage()
 {
 }
 
-void GUIPage::begin(String _name, int _xPos, int _yPos) {
+void GUIPage::begin(String _name, int _xPos, int _yPos, int _width, int _height) {
 	name = _name;
 	xPos = _xPos;
 	yPos = _yPos;
+	width = _width;
+	height = _height;
 }
 
 void GUIPage::setTopElem(GUIElement * _elem)
@@ -31,28 +33,42 @@ void GUIPage::setSelectedElem(GUIElement * elem)
 	selectedElement = elem;
 }
 
-void GUIPage::inputUp()
+void GUIPage::setName(String _name)
 {
-	if (selectedElement == NULL) return;
+	name = _name;
+}
+
+String GUIPage::getName()
+{
+	return name;
+}
+
+bool GUIPage::inputUp()
+{
+	if (selectedElement == NULL) return false;
 	selectedElement->inputUp();
+	return true;
 }
 
-void GUIPage::inputDown()
+bool GUIPage::inputDown()
 {
-	if (selectedElement == NULL) return;
+	if (selectedElement == NULL) return false;
 	selectedElement->inputDown();
+	return true;
 }
 
-void GUIPage::inputLeft()
+bool GUIPage::inputLeft()
 {
-	if (selectedElement == NULL) return;
+	if (selectedElement == NULL) return false;
 	selectedElement->inputLeft();
+	return true;
 }
 
-void GUIPage::inputRight()
+bool GUIPage::inputRight()
 {
-	if (selectedElement == NULL) return;
+	if (selectedElement == NULL) return false;
 	selectedElement->inputRight();
+	return true;
 }
 
 void GUIPage::buttonPress(int val)

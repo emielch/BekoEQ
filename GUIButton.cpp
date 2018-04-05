@@ -20,9 +20,10 @@ void GUIButton::setName(String _name)
 	name = _name;
 }
 
-void GUIButton::setCallback(void(*_callback)(float))
+void GUIButton::setCallback(void(*_callback)(float, void *), void * _page)
 {
 	callback = _callback;
+	callback_page = _page;
 }
 
 void GUIButton::setSource(float* _source)
@@ -79,18 +80,20 @@ void GUIButton::drawVal(ILI9341_t3 tft) {
 	updateVal = false;
 }
 
-void GUIButton::inputLeft()
+bool GUIButton::inputLeft()
 {
-	if (callback == NULL) return;
-	callback(-1 * accel());
+	if (callback == NULL) return false;
+	callback(-1 * accel(), callback_page);
 	updateVal = true;
+	return true;
 }
 
-void GUIButton::inputRight()
+bool GUIButton::inputRight()
 {
-	if (callback == NULL) return;
-	callback(1 * accel());
+	if (callback == NULL) return false;
+	callback(1 * accel(),callback_page);
 	updateVal = true;
+	return true;
 }
 
 float GUIButton::accel()

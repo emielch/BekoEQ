@@ -36,10 +36,10 @@ public:
 	void select();
 	void deselect();
 
-	virtual void inputUp();
-	virtual void inputDown();
-	virtual void inputLeft();
-	virtual void inputRight();
+	virtual bool inputUp();
+	virtual bool inputDown();
+	virtual bool inputLeft();
+	virtual bool inputRight();
 
 	GUIElement* prevElem;
 	GUIElement* nextElem;

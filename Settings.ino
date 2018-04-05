@@ -9,7 +9,7 @@ float batVolt = 0;
 int screenBri = 20;
 String labelScreenBri = String(screenBri / 2.55, 0) + "%";
 
-void setScreenBri(float b) {
+void setScreenBri(float b, void* page) {
 	if (b > 0 && b < 1) b = 1;
 	screenBri += b;
 	if (screenBri < 5) screenBri = 5;
@@ -31,7 +31,7 @@ void updateBatVolt() {
 int jackSetting = 0;
 String jackLabels[] = { "Auto","On","Off" };
 String labelJackIn = jackLabels[jackSetting];
-void setJackIn(float b)
+void setJackIn(float b, void* page)
 {
 	jackSetting += posOrNeg(b);
 	jackSetting = constrain(jackSetting, 0, 2);
@@ -44,7 +44,7 @@ void setJackIn(float b)
 int USBSetting = 0;
 String USBLabels[] = { "On","Off" };
 String labelUSBIn = USBLabels[USBSetting];
-void setUSBIn(float b)
+void setUSBIn(float b, void* page)
 {
 	USBSetting += posOrNeg(b);
 	USBSetting = constrain(USBSetting, 0, 1);
@@ -57,7 +57,7 @@ void setUSBIn(float b)
 int speakerSetting = 1;
 String speakerLabels[] = { "On","Off" };
 String labelSpeaker = speakerLabels[speakerSetting];
-void setSpeaker(float b)
+void setSpeaker(float b, void* page)
 {
 	speakerSetting += posOrNeg(b);
 	speakerSetting = constrain(speakerSetting, 0, 1);

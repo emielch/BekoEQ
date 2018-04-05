@@ -5,7 +5,7 @@
 #include "GUI.h"
 
 GUI::GUI() {
-	GUIPage::begin("GUI", 0, 0);
+	GUIPage::begin("GUI", 0, 0, tft.width(), tft.height());
 	tft.begin();
 	tft.setRotation(0);
 	tft.setTextColor(ILI9341_WHITE);
@@ -22,19 +22,20 @@ GUI::GUI() {
 	navBar.begin(this, 0, topBarHeight += audioLevelRight.getHeight() + 1, tft.width(), 30, Color(220, 20, 30, HSB_MODE));
 	topBarHeight += navBar.getHeight();
 
-	testPage.begin(0, topBarHeight);
-	settingsPage.begin(0, topBarHeight);
-	pages[0] = &testPage;
-	pages[1] = &settingsPage;
+	settingsPage.begin(0, topBarHeight, tft.width(), tft.height() - topBarHeight);
+	eqPage.begin(0, topBarHeight, tft.width(), tft.height() - topBarHeight);
+
+	pages[0] = &settingsPage;
+	pages[1] = &eqPage;
 	navBar.setPages(pages, pageAm);
 
-	testPage.setTopElem(&navBar);
 	settingsPage.setTopElem(&navBar);
+	eqPage.setTopElem(&navBar);
 
 	audioLevelLeft.setSource(&peakOutLeftVal);
 	audioLevelRight.setSource(&peakOutRightVal);
 
-	switchPage(&testPage);
+	navBar.goToPageIndex(1);
 }
 
 void GUI::setBacklightPower(float val)
@@ -115,38 +116,46 @@ void GUI::inputUp(int val)
 {
 	if (inputBlock()) return;
 	for (int i = 0; i < val; i++) {
-		currentPage->inputUp();
+		if (!currentPage->inputUp())
+			GUIPage::inputUp();
 	}
+
 }
 
 void GUI::inputDown(int val)
 {
 	if (inputBlock()) return;
 	for (int i = 0; i < val; i++) {
-		currentPage->inputDown();
+		if (!currentPage->inputDown())
+			GUIPage::inputDown();
 	}
+
 }
 
 void GUI::inputLeft(int val)
 {
 	if (inputBlock()) return;
 	for (int i = 0; i < val; i++) {
-		currentPage->inputLeft();
+		if (!currentPage->inputLeft())
+			GUIPage::inputLeft();
 	}
+
 }
 
 void GUI::inputRight(int val)
 {
 	if (inputBlock()) return;
 	for (int i = 0; i < val; i++) {
-		currentPage->inputRight();
+		if (!currentPage->inputRight())
+			GUIPage::inputRight();
 	}
+
 }
 
 void GUI::switchPage(GUIPage* page) {
 	currentPage = page;
 	currentPage->setTopElem(&navBar);
-	currentPage->setSelectedElem(&navBar);
+	currentPage->setSelectedElem(NULL);
 	navBar.select();
 	currentPage->resetDrawing();
 }
