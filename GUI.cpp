@@ -46,7 +46,7 @@ void GUI::setBacklightPower(float val)
 void GUI::setScreenBri(int bri)
 {
 	screenBri = bri;
-	analogWrite(BACKLIGHT, backlightPower*screenBri);
+	//analogWrite(BACKLIGHT, backlightPower*screenBri);
 }
 
 void GUI::update(float dt)
@@ -81,7 +81,16 @@ void GUI::updateScreenBri(float dt)
 			if (backlightPower < backlightPowerSetpoint) backlightPower = backlightPowerSetpoint;
 		}
 
-		analogWrite(BACKLIGHT, ceil(backlightPower*screenBri));
+		//analogWrite(BACKLIGHT, ceil(backlightPower*screenBri));
+
+		if (backlightPower>0.01) {
+			digitalWrite(BACKLIGHT, false);
+			pinMode(BACKLIGHT, OUTPUT);
+		}
+		else {
+			digitalWrite(BACKLIGHT, false);
+			pinMode(BACKLIGHT, INPUT);
+		}
 	}
 }
 
