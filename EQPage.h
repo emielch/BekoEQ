@@ -11,21 +11,9 @@
 
 #include "GUIPage.h"
 #include "EQSubPage.h"
+#include "EQ_STRUCTS.h"
 
-extern float lowShelfFreq;
-extern float band1Freq;
-extern float band2Freq;
-extern float highShelfFreq;
-
-extern float lowShelfGain;
-extern float band1Gain;
-extern float band2Gain;
-extern float highShelfGain;
-
-extern float lowShelfQ;
-extern float band1Q;
-extern float band2Q;
-extern float highShelfQ;
+extern EQ_SETTINGS current_EQ_settings;
 
 extern void setLowShelfFreq(float freq, void* page);
 extern void setBand1Freq(float freq, void* page);
@@ -42,12 +30,18 @@ extern void setBand1Q(float q, void* page);
 extern void setBand2Q(float q, void* page);
 extern void setHighShelfQ(float q, void* page);
 
+extern void switchPresetSlot(float d, void * page);
+extern void savePresetSlot(float d, void * page);
+extern void loadPresetSlot(float d, void * page);
+
+extern String currentPresetSlotName;
+
 
 class EQPage : public GUIPage
 {
 protected:
 	GUIButton filterButton;
-	const static int subPagesAm = 4;
+	const static int subPagesAm = 5;
 	EQSubPage EQSubPages[subPagesAm];
 	EQSubPage* currentSubPage;
 	int currentSubPageIdx;

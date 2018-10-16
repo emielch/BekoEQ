@@ -23,6 +23,13 @@ void EQSubPage::setUpButton(int buttonIdx, String _name, float* _source, void(*_
 	GUIButtons[buttonIdx].setCallback(_callback, this);
 }
 
+void EQSubPage::setUpButton(int buttonIdx, String _name, String * _source, void(*_callback)(float, void *))
+{
+	GUIButtons[buttonIdx].setName(_name);
+	GUIButtons[buttonIdx].setSource(_source);
+	GUIButtons[buttonIdx].setCallback(_callback, this);
+}
+
 void EQSubPage::setTopElem(GUIElement * _elem)
 {
 	GUIButtons[0].prevElem = _elem;
@@ -38,7 +45,7 @@ void EQSubPage::update()
 
 void EQSubPage::draw(ILI9341_t3 tft)
 {
-	GUIPage::draw(tft);
+	//GUIPage::draw(tft);
 	for (int i = 0; i < buttonsAm; i++) {
 		GUIButtons[i].draw(tft, updateDrawing);
 	}

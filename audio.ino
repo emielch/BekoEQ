@@ -60,20 +60,7 @@ AudioConnection          patchCord31(mixer2, peakOut_right);
 AudioControlSGTL5000     sgtl5000_1;     //xy=578,105
 // GUItool: end automatically generated code
 
-float lowShelfFreq = 200;
-float band1Freq = 500;
-float band2Freq = 2000;
-float highShelfFreq = 7000;
-
-float lowShelfGain = 0;
-float band1Gain = 0;
-float band2Gain = 0;
-float highShelfGain = 0;
-
-float lowShelfQ = 1;
-float band1Q = 0.7;
-float band2Q = 0.7;
-float highShelfQ = 1;
+EQ_SETTINGS current_EQ_settings = {0,200,1,0,500,0.7,0,2000,0.7,0,7000,1};
 
 unsigned long lastNoiseThresh = 0;
 float jackIn_gain = 1;
@@ -138,118 +125,125 @@ void updateInputGain(int channel, float val) {
 }
 
 void updateLowShelf() {
-	biquad1.setLowShelf(0, lowShelfFreq, lowShelfGain, lowShelfQ);
-	biquad2.setLowShelf(0, lowShelfFreq, lowShelfGain, lowShelfQ);
+	biquad1.setLowShelf(0, current_EQ_settings.lowShelfFreq, current_EQ_settings.lowShelfGain, current_EQ_settings.lowShelfQ);
+	biquad2.setLowShelf(0, current_EQ_settings.lowShelfFreq, current_EQ_settings.lowShelfGain, current_EQ_settings.lowShelfQ);
+
+	scheduleEQSave();
 }
 
 void updateBand1() {
-	filter1.frequency(band1Freq);
-	filter1.resonance(band1Q);
-	mixer1.gain(1, band1Gain);
+	filter1.frequency(current_EQ_settings.band1Freq);
+	filter1.resonance(current_EQ_settings.band1Q);
+	mixer1.gain(1, current_EQ_settings.band1Gain);
 
-	filter3.frequency(band1Freq);
-	filter3.resonance(band1Q);
-	mixer2.gain(1, band1Gain);
+	filter3.frequency(current_EQ_settings.band1Freq);
+	filter3.resonance(current_EQ_settings.band1Q);
+	mixer2.gain(1, current_EQ_settings.band1Gain);
+
+	scheduleEQSave();
 
 	/*biquad1.setNotch(2, band1Freq, band1Q);
 	  biquad2.setNotch(2, band1Freq, band1Q);*/
 }
 
 void updateBand2() {
-	filter2.frequency(band2Freq);
-	filter2.resonance(band2Q);
-	mixer1.gain(2, band2Gain);
+	filter2.frequency(current_EQ_settings.band2Freq);
+	filter2.resonance(current_EQ_settings.band2Q);
+	mixer1.gain(2, current_EQ_settings.band2Gain);
 
-	filter4.frequency(band2Freq);
-	filter4.resonance(band2Q);
-	mixer2.gain(2, band2Gain);
+	filter4.frequency(current_EQ_settings.band2Freq);
+	filter4.resonance(current_EQ_settings.band2Q);
+	mixer2.gain(2, current_EQ_settings.band2Gain);
+
+	scheduleEQSave();
 
 	/*biquad1.setNotch(3, band2Freq, band2Q);
 	  biquad2.setNotch(3, band2Freq, band2Q);*/
 }
 
 void updateHighShelf() {
-	biquad1.setHighShelf(1, highShelfFreq, highShelfGain, highShelfQ);
-	biquad2.setHighShelf(1, highShelfFreq, highShelfGain, highShelfQ);
+	biquad1.setHighShelf(1, current_EQ_settings.highShelfFreq, current_EQ_settings.highShelfGain, current_EQ_settings.highShelfQ);
+	biquad2.setHighShelf(1, current_EQ_settings.highShelfFreq, current_EQ_settings.highShelfGain, current_EQ_settings.highShelfQ);
+	scheduleEQSave();
 }
 
 
 // FREQ
 void setLowShelfFreq(float freq, void* page) {
-	lowShelfFreq += lowShelfFreq * 0.03 * freq;
-	if (lowShelfFreq < 0.1)lowShelfFreq = 0.1;
-	else if (lowShelfFreq > 22050)lowShelfFreq = 22050;
+	current_EQ_settings.lowShelfFreq += current_EQ_settings.lowShelfFreq * 0.03 * freq;
+	if (current_EQ_settings.lowShelfFreq < 0.1)current_EQ_settings.lowShelfFreq = 0.1;
+	else if (current_EQ_settings.lowShelfFreq > 22050)current_EQ_settings.lowShelfFreq = 22050;
 	updateLowShelf();
 }
 
 void setBand1Freq(float freq, void* page) {
-	band1Freq += band1Freq * 0.03 * freq;;
-	if (band1Freq < 0.1)band1Freq = 0.1;
-	else if (band1Freq > 22050)band1Freq = 22050;
+	current_EQ_settings.band1Freq += current_EQ_settings.band1Freq * 0.03 * freq;;
+	if (current_EQ_settings.band1Freq < 0.1)current_EQ_settings.band1Freq = 0.1;
+	else if (current_EQ_settings.band1Freq > 22050)current_EQ_settings.band1Freq = 22050;
 	updateBand1();
 }
 
 void setBand2Freq(float freq, void* page) {
-	band2Freq += band2Freq * 0.03 * freq;;
-	if (band2Freq < 0.1)band2Freq = 0.1;
-	else if (band2Freq > 22050)band2Freq = 22050;
+	current_EQ_settings.band2Freq += current_EQ_settings.band2Freq * 0.03 * freq;;
+	if (current_EQ_settings.band2Freq < 0.1)current_EQ_settings.band2Freq = 0.1;
+	else if (current_EQ_settings.band2Freq > 22050)current_EQ_settings.band2Freq = 22050;
 	updateBand2();
 }
 
 void setHighShelfFreq(float freq, void* page) {
-	highShelfFreq += highShelfFreq * 0.03 * freq;;
-	if (highShelfFreq < 0.1)highShelfFreq = 0.1;
-	else if (highShelfFreq > 22050)highShelfFreq = 22050;
+	current_EQ_settings.highShelfFreq += current_EQ_settings.highShelfFreq * 0.03 * freq;;
+	if (current_EQ_settings.highShelfFreq < 0.1)current_EQ_settings.highShelfFreq = 0.1;
+	else if (current_EQ_settings.highShelfFreq > 22050)current_EQ_settings.highShelfFreq = 22050;
 	updateHighShelf();
 }
 
 // GAIN
 void setLowShelfGain(float gain, void* page) {
-	lowShelfGain += gain * 0.3;
+	current_EQ_settings.lowShelfGain += gain * 0.3;
 	updateLowShelf();
 }
 
 void setBand1Gain(float gain, void* page) {
-	band1Gain += gain * 0.3;
-	if (band1Gain < 0)band1Gain = 0;
-	else if (band1Gain > 20)band1Gain = 20;
+	current_EQ_settings.band1Gain += gain * 0.3;
+	if (current_EQ_settings.band1Gain < 0)current_EQ_settings.band1Gain = 0;
+	else if (current_EQ_settings.band1Gain > 20)current_EQ_settings.band1Gain = 20;
 	updateBand1();
 }
 
 void setBand2Gain(float gain, void* page) {
-	band2Gain += gain * 0.3;
-	if (band2Gain < 0)band2Gain = 0;
-	else if (band2Gain > 20)band2Gain = 20;
+	current_EQ_settings.band2Gain += gain * 0.3;
+	if (current_EQ_settings.band2Gain < 0)current_EQ_settings.band2Gain = 0;
+	else if (current_EQ_settings.band2Gain > 20)current_EQ_settings.band2Gain = 20;
 	updateBand2();
 }
 
 void setHighShelfGain(float gain, void* page) {
-	highShelfGain += gain * 0.3;
+	current_EQ_settings.highShelfGain += gain * 0.3;
 	updateHighShelf();
 }
 
 
 // Q
 void setLowShelfQ(float q, void* page) {
-	lowShelfQ += q * 0.3;
+	current_EQ_settings.lowShelfQ += q * 0.3;
 	updateLowShelf();
 }
 
 void setBand1Q(float q, void* page) {
-	band1Q += q * 0.3;
-	if (band1Q < 0.7)band1Q = 0.7;
-	else if (band1Q > 5)band1Q = 5;
+	current_EQ_settings.band1Q += q * 0.3;
+	if (current_EQ_settings.band1Q < 0.7)current_EQ_settings.band1Q = 0.7;
+	else if (current_EQ_settings.band1Q > 5)current_EQ_settings.band1Q = 5;
 	updateBand1();
 }
 
 void setBand2Q(float q, void* page) {
-	band2Q += q * 0.3;
-	if (band2Q < 0.7)band2Q = 0.7;
-	else if (band2Q > 5)band2Q = 5;
+	current_EQ_settings.band2Q += q * 0.3;
+	if (current_EQ_settings.band2Q < 0.7)current_EQ_settings.band2Q = 0.7;
+	else if (current_EQ_settings.band2Q > 5)current_EQ_settings.band2Q = 5;
 	updateBand2();
 }
 
 void setHighShelfQ(float q, void* page) {
-	highShelfQ += q * 0.3;
+	current_EQ_settings.highShelfQ += q * 0.3;
 	updateHighShelf();
 }

@@ -101,6 +101,8 @@ float GUIButton::accel()
 	unsigned long inputTime = millis();
 	unsigned long inputInterval = inputTime - lastInput;
 	lastInput = inputTime;
+	int val = 400. / inputInterval;
+	if (val == 0) val = 1;
 
-	return 200. / inputInterval;
+	return val*0.5;
 }

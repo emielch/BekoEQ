@@ -11,16 +11,16 @@
 
 #include "GUIPage.h"
 
+extern void moveScreenBri(float b, void* page);
 extern String labelScreenBri;
-extern void setScreenBri(float b, void* page);
 
-extern void setJackIn(float b, void* page);
+extern void moveJackIn(float b, void* page);
 extern String labelJackIn;
 
-extern void setUSBIn(float b, void* page);
+extern void moveUSBIn(float b, void* page);
 extern String labelUSBIn;
 
-extern void setSpeaker(float b, void* page);
+extern void moveSpeakerOut(float b, void* page);
 extern String labelSpeaker;
 
 

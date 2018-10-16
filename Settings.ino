@@ -6,16 +6,20 @@ bool speakerOn = true;
 float batVolt = 0;
 
 
-int screenBri = 20;
-String labelScreenBri = String(screenBri / 2.55, 0) + "%";
+String labelScreenBri ="";
 
-void setScreenBri(float b, void* page) {
-	if (b > 0 && b < 1) b = 1;
-	screenBri += b;
-	if (screenBri < 5) screenBri = 5;
-	else if (screenBri > 255) screenBri = 255;
+void setScreenBri(int s) {
+	if (s < 5) screenBri = 5;
+	else if (s > 255) screenBri = 255;
+	else screenBri = s;
 	gui.setScreenBri(screenBri);
 	labelScreenBri = String(screenBri / 2.55, 0) + "%";
+}
+
+void moveScreenBri(float b, void* page) {
+	if (b > 0 && b < 1) b = 1;
+	setScreenBri(screenBri + b);
+	scheduleSettingsSave();
 }
 
 elapsedMillis timeSinceBatRead = 0;
@@ -27,40 +31,42 @@ void updateBatVolt() {
 	}
 }
 
-
-int jackSetting = 0;
 String jackLabels[] = { "Auto","On","Off" };
 String labelJackIn = jackLabels[jackSetting];
-void setJackIn(float b, void* page)
-{
-	jackSetting += posOrNeg(b);
-	jackSetting = constrain(jackSetting, 0, 2);
+void setJackSetting(int s) {
+	jackSetting = constrain(s, 0, 2);
 	labelJackIn = jackLabels[jackSetting];
 
 	if (jackSetting == 1) jackInOn = true;
 	if (jackSetting == 2) jackInOn = false;
 }
 
-int USBSetting = 0;
-String USBLabels[] = { "On","Off" };
-String labelUSBIn = USBLabels[USBSetting];
-void setUSBIn(float b, void* page)
+void moveJackIn(float b, void* page)
 {
-	USBSetting += posOrNeg(b);
-	USBSetting = constrain(USBSetting, 0, 1);
-	labelUSBIn = USBLabels[USBSetting];
+	setJackSetting(jackSetting + posOrNeg(b));
+	scheduleSettingsSave();
+}
 
-	if (USBSetting == 0) USBInOn = true;
+String USBLabels[] = { "On","Off" };
+String labelUSBIn = USBLabels[usbSetting];
+void setUSBSetting(int s) {
+	usbSetting = constrain(s, 0, 1);
+	labelUSBIn = USBLabels[usbSetting];
+
+	if (usbSetting == 0) USBInOn = true;
 	else USBInOn = false;
 }
 
-int speakerSetting = 1;
+void moveUSBIn(float b, void* page)
+{
+	setUSBSetting(usbSetting + posOrNeg(b));
+	scheduleSettingsSave();
+}
+
 String speakerLabels[] = { "On","Off" };
 String labelSpeaker = speakerLabels[speakerSetting];
-void setSpeaker(float b, void* page)
-{
-	speakerSetting += posOrNeg(b);
-	speakerSetting = constrain(speakerSetting, 0, 1);
+void setSpeakerSetting(int s) {
+	speakerSetting = constrain(s, 0, 1);
 	labelSpeaker = speakerLabels[speakerSetting];
 
 	if (speakerSetting == 0) {
@@ -71,6 +77,12 @@ void setSpeaker(float b, void* page)
 		speakerOn = false;
 		digitalWrite(SPEAKER_ENABLE, LOW);
 	}
+}
+
+void moveSpeakerOut(float b, void* page)
+{
+	setSpeakerSetting(speakerSetting + posOrNeg(b));
+	scheduleSettingsSave();
 }
 
 int posOrNeg(float in) {

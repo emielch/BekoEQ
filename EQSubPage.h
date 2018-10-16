@@ -22,6 +22,7 @@ public:
 	EQSubPage() {};
 	void begin(int _xPos, int _yPos, int _width, int _height);
 	void setUpButton(int buttonIdx, String _name, float * _source, void(*_callback)(float, void *));
+	void setUpButton(int buttonIdx, String _name, String * _source, void(*_callback)(float, void *));
 	void setTopElem(GUIElement* _elem);
 	void update();
 	void draw(ILI9341_t3 tft);

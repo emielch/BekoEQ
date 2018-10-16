@@ -11,6 +11,9 @@ Encoder enc2(1, 2);
 long enc1Pos = 0;
 long enc2Pos = 0;
 
+Color leftCol = Color(0, 100, 100, HSB_MODE);
+Color rightCol = Color(120, 100, 100, HSB_MODE);
+
 void updateEncoders() {
 	long enc1NewPos = enc1.read();
 	long enc2NewPos = enc2.read();
@@ -20,6 +23,10 @@ void updateEncoders() {
 		if (delta>0) gui.inputLeft(delta);
 		else gui.inputRight(-delta);
 		enc1Pos = enc1NewPos;
+
+		leftCol.setHSB(leftCol.hue() + delta*5, leftCol.saturation(), leftCol.brightness());
+		strip.setPixelColor(0, leftCol.red(), leftCol.green(), leftCol.blue());
+		//strip.show();
 	}
 
 	if (enc2NewPos / 4 != enc2Pos / 4) {
@@ -27,6 +34,10 @@ void updateEncoders() {
 		if (delta>0) gui.inputDown(delta);
 		else gui.inputUp(-delta);
 		enc2Pos = enc2NewPos;
+
+		rightCol.setHSB(rightCol.hue() + delta*5, rightCol.saturation(), rightCol.brightness());
+		strip.setPixelColor(1, rightCol.red(), rightCol.green(), rightCol.blue());
+		//strip.show();
 	}
 }
 

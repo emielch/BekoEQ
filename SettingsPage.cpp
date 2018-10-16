@@ -16,19 +16,19 @@ void SettingsPage::begin(int _xPos, int _yPos, int _width, int _height) {
 	}
 
 
-	GUIButtons[0].setCallback(setScreenBri, this);
+	GUIButtons[0].setCallback(moveScreenBri, this);
 	GUIButtons[0].setSource(&labelScreenBri);
 	GUIButtons[0].setName("Brightness");
 
-	GUIButtons[1].setCallback(setJackIn, this);
+	GUIButtons[1].setCallback(moveJackIn, this);
 	GUIButtons[1].setSource(&labelJackIn);
 	GUIButtons[1].setName("Jack In");
 
-	GUIButtons[2].setCallback(setUSBIn, this);
+	GUIButtons[2].setCallback(moveUSBIn, this);
 	GUIButtons[2].setSource(&labelUSBIn);
 	GUIButtons[2].setName("USB In");
 
-	GUIButtons[3].setCallback(setSpeaker, this);
+	GUIButtons[3].setCallback(moveSpeakerOut, this);
 	GUIButtons[3].setSource(&labelSpeaker);
 	GUIButtons[3].setName("Speaker");
 }

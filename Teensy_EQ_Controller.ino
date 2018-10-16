@@ -18,19 +18,29 @@
 #include "GUIElement.h"
 
 #include <Bounce.h>
+#include <Adafruit_NeoPixel.h>
 
 #define SPEAKER_ENABLE 6
 #define BUTTON_1 8
 #define BUTTON_2 17
 #define BAT_SENSE 15
+#define NEOPIXEL_PIN 16
 
 Bounce button1 = Bounce(BUTTON_1, 10);  // 10 ms debounce
 Bounce button2 = Bounce(BUTTON_2, 10);  // 10 ms debounce
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(2, NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 
 GUI gui;
 elapsedMillis sinceNext;
 unsigned long previousMicros = 0;
+
+byte screenBri = 20;
+byte jackSetting = 0;
+byte usbSetting = 0;
+byte speakerSetting = 1;
+
 
 void setup() {
 	setupAudio();
@@ -39,7 +49,12 @@ void setup() {
 	pinMode(BAT_SENSE, INPUT);
 	pinMode(BUTTON_1, INPUT);
 	pinMode(BUTTON_2, INPUT);
-	setSpeaker(1,NULL);
+	loadSettings();
+	loadEQSettings(0);
+	goToPresetSlot(0);
+
+	strip.begin();
+	strip.show();
 }
 
 
@@ -53,6 +68,7 @@ void loop() {
 	updateButtons();
 	updateAudio(dt);
 	updateBatVolt();
+	updateSaving();
 
 	gui.update(dt);
 	gui.draw();
