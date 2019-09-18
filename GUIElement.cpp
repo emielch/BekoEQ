@@ -65,10 +65,12 @@ bool GUIElement::inputDown()
 
 bool GUIElement::inputLeft()
 {
+	return false;
 }
 
 bool GUIElement::inputRight()
 {
+	return false;
 }
 
 int GUIElement::getWidth() {
