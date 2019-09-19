@@ -1,5 +1,7 @@
 #include <EEPROM.h>
 
+extern EQ_SETTINGS current_EQ_settings;
+
 struct SETTINGS {
 	byte screenBri;
 	byte jackSetting;
@@ -63,10 +65,10 @@ void loadEQSettings(int idx) {
 	EEPROM.get(EEPROM_offset, eq_settings);
 	current_EQ_settings = eq_settings;
 
-	updateLowShelf();
-	updateBand1();
-	updateBand2();
-	updateHighShelf();
+	updateLowShelf_usb();
+	updateBand1_usb();
+	updateBand2_usb();
+	updateHighShelf_usb();
 }
 
 
@@ -96,10 +98,10 @@ void loadPresetSlot(float d, void * this_pointer)
 	if (currentSlotIdx == 0) {
 		current_EQ_settings = { 0,200,1,0,500,0.7,0,2000,0.7,0,7000,1 };
 
-		updateLowShelf();
-		updateBand1();
-		updateBand2();
-		updateHighShelf();
+		updateLowShelf_usb();
+		updateBand1_usb();
+		updateBand2_usb();
+		updateHighShelf_usb();
 	}
 	else {
 		loadEQSettings(currentSlotIdx);

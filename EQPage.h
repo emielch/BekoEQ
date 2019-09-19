@@ -13,8 +13,6 @@
 #include "EQSubPage.h"
 #include "EQ_STRUCTS.h"
 
-extern EQ_SETTINGS current_EQ_settings;
-
 extern void setLowShelfFreq(float freq, void* page);
 extern void setBand1Freq(float freq, void* page);
 extern void setBand2Freq(float freq, void* page);
@@ -45,11 +43,12 @@ protected:
 	EQSubPage EQSubPages[subPagesAm];
 	EQSubPage* currentSubPage;
 	int currentSubPageIdx;
+	EQ_SETTINGS* EQSettings;
 
 public:
 	EQPage() {};
 	String currentSubPageName;
-	void begin(int _xPos, int _yPos, int _width, int _height);
+	void begin(int _xPos, int _yPos, int _width, int _height, String _name, EQ_SETTINGS* _EQSettings);
 	void switchSubPage(int idx);
 	void setTopElem(GUIElement* _elem);
 	static void switchSubPageCallback(float d, void * this_pointer);

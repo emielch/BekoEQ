@@ -16,18 +16,18 @@ void EQSubPage::begin(int _xPos, int _yPos, int _width, int _height)
 	}
 }
 
-void EQSubPage::setUpButton(int buttonIdx, String _name, float* _source, void(*_callback)(float, void *))
+void EQSubPage::setUpButton(int buttonIdx, String _name, float* _source, void(*_callback)(float, void *), void* page)
 {
 	GUIButtons[buttonIdx].setName(_name);
 	GUIButtons[buttonIdx].setSource(_source);
-	GUIButtons[buttonIdx].setCallback(_callback, this);
+	GUIButtons[buttonIdx].setCallback(_callback, page);
 }
 
-void EQSubPage::setUpButton(int buttonIdx, String _name, String * _source, void(*_callback)(float, void *))
+void EQSubPage::setUpButton(int buttonIdx, String _name, String * _source, void(*_callback)(float, void *), void* page)
 {
 	GUIButtons[buttonIdx].setName(_name);
 	GUIButtons[buttonIdx].setSource(_source);
-	GUIButtons[buttonIdx].setCallback(_callback, this);
+	GUIButtons[buttonIdx].setCallback(_callback, page);
 }
 
 void EQSubPage::setTopElem(GUIElement * _elem)

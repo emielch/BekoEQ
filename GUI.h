@@ -19,6 +19,9 @@
 #include "EQPage.h"
 #include "SettingsPage.h"
 
+extern EQ_SETTINGS current_jack_EQ_settings;
+extern EQ_SETTINGS current_usb_EQ_settings;
+
 // For the Adafruit shield, these are the default.
 #define TFT_DC      20
 #define TFT_CS      21
@@ -51,12 +54,14 @@ protected:
 	int topBarHeight;
 
 	SettingsPage settingsPage;
-	EQPage eqPage;
 
-	static const int pageAm = 2;
+	static const int pageAm = 3;
 	GUIPage* pages[pageAm];
 
 public:
+	EQPage eqPage_jack;
+	EQPage eqPage_usb;
+
 	GUI();
 	void setBacklightPower(float val);
 	void setScreenBri(int bri);

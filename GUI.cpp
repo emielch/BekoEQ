@@ -23,14 +23,17 @@ GUI::GUI() {
 	topBarHeight += navBar.getHeight();
 
 	settingsPage.begin(0, topBarHeight, tft.width(), tft.height() - topBarHeight);
-	eqPage.begin(0, topBarHeight, tft.width(), tft.height() - topBarHeight);
+	eqPage_jack.begin(0, topBarHeight, tft.width(), tft.height() - topBarHeight, "Jack", &current_jack_EQ_settings);
+	eqPage_usb.begin(0, topBarHeight, tft.width(), tft.height() - topBarHeight, "USB", &current_usb_EQ_settings);
 
 	pages[0] = &settingsPage;
-	pages[1] = &eqPage;
+	pages[1] = &eqPage_jack;
+	pages[2] = &eqPage_usb;
 	navBar.setPages(pages, pageAm);
 
 	settingsPage.setTopElem(&navBar);
-	eqPage.setTopElem(&navBar);
+	eqPage_jack.setTopElem(&navBar);
+	eqPage_usb.setTopElem(&navBar);
 
 	audioLevelLeft.setSource(&peakOutLeftVal);
 	audioLevelRight.setSource(&peakOutRightVal);

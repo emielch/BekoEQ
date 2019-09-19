@@ -4,9 +4,10 @@
 
 #include "EQPage.h"
 
-void EQPage::begin(int _xPos, int _yPos, int _width, int _height)
+void EQPage::begin(int _xPos, int _yPos, int _width, int _height, String _name, EQ_SETTINGS* _EQSettings)
 {
-	GUIPage::begin("EQ", _xPos, _yPos, _width, _height);
+	GUIPage::begin(_name + " EQ", _xPos, _yPos, _width, _height);
+	EQSettings = _EQSettings;
 
 	// eq frequency graph,
 	int eqGraphHeight = 145;
@@ -20,29 +21,29 @@ void EQPage::begin(int _xPos, int _yPos, int _width, int _height)
 		EQSubPages[i].setTopElem(&filterButton);
 	}
 
-	EQSubPages[0].setUpButton(0, "Preset", &currentPresetSlotName, switchPresetSlot);
-	EQSubPages[0].setUpButton(1, "Load", &current_EQ_settings.lowShelfFreq, loadPresetSlot);
-	EQSubPages[0].setUpButton(2, "Save", &current_EQ_settings.lowShelfFreq, savePresetSlot);
+	EQSubPages[0].setUpButton(0, "Preset", &currentPresetSlotName, switchPresetSlot, this);
+	EQSubPages[0].setUpButton(1, "Load", &EQSettings->lowShelfFreq, loadPresetSlot, this);
+	EQSubPages[0].setUpButton(2, "Save", &EQSettings->lowShelfFreq, savePresetSlot, this);
 	EQSubPages[0].setName("Presets");
 
-	EQSubPages[1].setUpButton(0, "Gain", &current_EQ_settings.lowShelfGain, setLowShelfGain);
-	EQSubPages[1].setUpButton(1, "Frequency", &current_EQ_settings.lowShelfFreq, setLowShelfFreq);
-	EQSubPages[1].setUpButton(2, "Q", &current_EQ_settings.lowShelfQ, setLowShelfQ);
+	EQSubPages[1].setUpButton(0, "Gain", &EQSettings->lowShelfGain, setLowShelfGain, this);
+	EQSubPages[1].setUpButton(1, "Frequency", &EQSettings->lowShelfFreq, setLowShelfFreq, this);
+	EQSubPages[1].setUpButton(2, "Q", &EQSettings->lowShelfQ, setLowShelfQ, this);
 	EQSubPages[1].setName("Low Shelf");
 
-	EQSubPages[2].setUpButton(0, "Gain", &current_EQ_settings.band1Gain, setBand1Gain);
-	EQSubPages[2].setUpButton(1, "Frequency", &current_EQ_settings.band1Freq, setBand1Freq);
-	EQSubPages[2].setUpButton(2, "Q", &current_EQ_settings.band1Q, setBand1Q);
+	EQSubPages[2].setUpButton(0, "Gain", &EQSettings->band1Gain, setBand1Gain, this);
+	EQSubPages[2].setUpButton(1, "Frequency", &EQSettings->band1Freq, setBand1Freq, this);
+	EQSubPages[2].setUpButton(2, "Q", &EQSettings->band1Q, setBand1Q, this);
 	EQSubPages[2].setName("Band 1");
 
-	EQSubPages[3].setUpButton(0, "Gain", &current_EQ_settings.band2Gain, setBand2Gain);
-	EQSubPages[3].setUpButton(1, "Frequency", &current_EQ_settings.band2Freq, setBand2Freq);
-	EQSubPages[3].setUpButton(2, "Q", &current_EQ_settings.band2Q, setBand2Q);
+	EQSubPages[3].setUpButton(0, "Gain", &EQSettings->band2Gain, setBand2Gain, this);
+	EQSubPages[3].setUpButton(1, "Frequency", &EQSettings->band2Freq, setBand2Freq, this);
+	EQSubPages[3].setUpButton(2, "Q", &EQSettings->band2Q, setBand2Q, this);
 	EQSubPages[3].setName("Band 2");
 
-	EQSubPages[4].setUpButton(0, "Gain", &current_EQ_settings.highShelfGain, setHighShelfGain);
-	EQSubPages[4].setUpButton(1, "Frequency", &current_EQ_settings.highShelfFreq, setHighShelfFreq);
-	EQSubPages[4].setUpButton(2, "Q", &current_EQ_settings.highShelfQ, setHighShelfQ);
+	EQSubPages[4].setUpButton(0, "Gain", &EQSettings->highShelfGain, setHighShelfGain, this);
+	EQSubPages[4].setUpButton(1, "Frequency", &EQSettings->highShelfFreq, setHighShelfFreq, this);
+	EQSubPages[4].setUpButton(2, "Q", &EQSettings->highShelfQ, setHighShelfQ, this);
 	EQSubPages[4].setName("High Shelf");
 
 	switchSubPage(0);
