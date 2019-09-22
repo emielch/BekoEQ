@@ -92,7 +92,6 @@ AudioControlSGTL5000     sgtl5000_1;     //xy=1165.4999389648438,205.41665649414
 
 float inputMult = 0.4;
 
-EQ_SETTINGS current_EQ_settings = { 0,200,1,0,500,0.7,0,2000,0.7,0,7000,1 };
 EQ_SETTINGS current_jack_EQ_settings = { 0,200,1,0,500,0.7,0,2000,0.7,0,7000,1 };
 EQ_SETTINGS current_usb_EQ_settings = { 0,200,1,0,500,0.7,0,2000,0.7,0,7000,1 };
 
@@ -177,13 +176,23 @@ void updateLowShelf_usb() {
 }
 
 void updateBand1_jack() {
+	if (current_jack_EQ_settings.band1Gain < 0) {
+		biquad_jack_L.setNotch(2, current_jack_EQ_settings.band1Freq, current_jack_EQ_settings.band1Q);
+		biquad_jack_R.setNotch(2, current_jack_EQ_settings.band1Freq, current_jack_EQ_settings.band1Q);
+	}
+	else {
+		biquad_jack_L.setLowShelf(2, 1000, 0, 1);
+		biquad_jack_R.setLowShelf(2, 1000, 0, 1);
+	}
+
+
 	band1_jack_L.frequency(current_jack_EQ_settings.band1Freq);
 	band1_jack_L.resonance(current_jack_EQ_settings.band1Q);
-	mixer1.gain(1, current_jack_EQ_settings.band1Gain);
+	mixer1.gain(1, max(0, current_jack_EQ_settings.band1Gain));
 
 	band1_jack_R.frequency(current_jack_EQ_settings.band1Freq);
 	band1_jack_R.resonance(current_jack_EQ_settings.band1Q);
-	mixer2.gain(1, current_jack_EQ_settings.band1Gain);
+	mixer2.gain(1, max(0, current_jack_EQ_settings.band1Gain));
 
 	scheduleEQSave();
 
@@ -191,14 +200,25 @@ void updateBand1_jack() {
 	  biquad2.setNotch(2, band1Freq, band1Q);*/
 }
 
+
 void updateBand1_usb() {
+	if (current_usb_EQ_settings.band1Gain < 0) {
+		biquad_usb_L.setNotch(2, current_usb_EQ_settings.band1Freq, current_usb_EQ_settings.band1Q);
+		biquad_usb_R.setNotch(2, current_usb_EQ_settings.band1Freq, current_usb_EQ_settings.band1Q);
+	} else {
+		biquad_usb_L.setLowShelf(2, 1000, 0, 1);
+		biquad_usb_R.setLowShelf(2, 1000, 0, 1);
+	}
+
+
+
 	band1_usb_L.frequency(current_usb_EQ_settings.band1Freq);
 	band1_usb_L.resonance(current_usb_EQ_settings.band1Q);
-	mixer3.gain(1, current_usb_EQ_settings.band1Gain);
+	mixer3.gain(1, max(0,current_usb_EQ_settings.band1Gain));
 
 	band1_usb_R.frequency(current_usb_EQ_settings.band1Freq);
 	band1_usb_R.resonance(current_usb_EQ_settings.band1Q);
-	mixer4.gain(1, current_usb_EQ_settings.band1Gain);
+	mixer4.gain(1, max(0, current_usb_EQ_settings.band1Gain));
 
 	scheduleEQSave();
 
@@ -207,13 +227,23 @@ void updateBand1_usb() {
 }
 
 void updateBand2_jack() {
+	if (current_jack_EQ_settings.band2Gain < 0) {
+		biquad_jack_L.setNotch(3, current_jack_EQ_settings.band2Freq, current_jack_EQ_settings.band2Q);
+		biquad_jack_R.setNotch(3, current_jack_EQ_settings.band2Freq, current_jack_EQ_settings.band2Q);
+	}
+	else {
+		biquad_jack_L.setLowShelf(3, 1000, 0, 1);
+		biquad_jack_R.setLowShelf(3, 1000, 0, 1);
+	}
+
+
 	band2_jack_L.frequency(current_jack_EQ_settings.band2Freq);
 	band2_jack_L.resonance(current_jack_EQ_settings.band2Q);
-	mixer1.gain(2, current_jack_EQ_settings.band2Gain);
+	mixer1.gain(2, max(0, current_jack_EQ_settings.band2Gain));
 
 	band2_jack_R.frequency(current_jack_EQ_settings.band2Freq);
 	band2_jack_R.resonance(current_jack_EQ_settings.band2Q);
-	mixer2.gain(2, current_jack_EQ_settings.band2Gain);
+	mixer2.gain(2, max(0, current_jack_EQ_settings.band2Gain));
 
 	scheduleEQSave();
 
@@ -222,13 +252,23 @@ void updateBand2_jack() {
 }
 
 void updateBand2_usb() {
+	if (current_usb_EQ_settings.band2Gain < 0) {
+		biquad_usb_L.setNotch(3, current_usb_EQ_settings.band2Freq, current_usb_EQ_settings.band2Q);
+		biquad_usb_R.setNotch(3, current_usb_EQ_settings.band2Freq, current_usb_EQ_settings.band2Q);
+	}
+	else {
+		biquad_usb_L.setLowShelf(3, 1000, 0, 1);
+		biquad_usb_R.setLowShelf(3, 1000, 0, 1);
+	}
+
+
 	band2_usb_L.frequency(current_usb_EQ_settings.band2Freq);
 	band2_usb_L.resonance(current_usb_EQ_settings.band2Q);
-	mixer3.gain(2, current_usb_EQ_settings.band2Gain);
+	mixer3.gain(2, max(0, current_usb_EQ_settings.band2Gain));
 
 	band2_usb_R.frequency(current_usb_EQ_settings.band2Freq);
 	band2_usb_R.resonance(current_usb_EQ_settings.band2Q);
-	mixer4.gain(2, current_usb_EQ_settings.band2Gain);
+	mixer4.gain(2, max(0, current_usb_EQ_settings.band2Gain));
 
 	scheduleEQSave();
 
@@ -316,7 +356,7 @@ void setBand1Gain(float gain, void* page) {
 	if (page == &gui.eqPage_usb) editSettings = &current_usb_EQ_settings;
 
 	editSettings->band1Gain += gain * 0.3;
-	if (editSettings->band1Gain < 0)editSettings->band1Gain = 0;
+	if (editSettings->band1Gain < -1)editSettings->band1Gain = -1;
 	else if (editSettings->band1Gain > 20)editSettings->band1Gain = 20;
 
 	if (page == &gui.eqPage_usb) updateBand1_usb();
@@ -328,7 +368,7 @@ void setBand2Gain(float gain, void* page) {
 	if (page == &gui.eqPage_usb) editSettings = &current_usb_EQ_settings;
 
 	editSettings->band2Gain += gain * 0.3;
-	if (editSettings->band2Gain < 0)editSettings->band2Gain = 0;
+	if (editSettings->band2Gain < -1)editSettings->band2Gain = -1;
 	else if (editSettings->band2Gain > 20)editSettings->band2Gain = 20;
 
 	if (page == &gui.eqPage_usb) updateBand2_usb();
