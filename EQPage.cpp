@@ -4,6 +4,8 @@
 
 #include "EQPage.h"
 
+extern String saveString;
+
 void EQPage::begin(int _xPos, int _yPos, int _width, int _height, String _name, EQ_SETTINGS* _EQSettings)
 {
 	GUIPage::begin(_name + " EQ", _xPos, _yPos, _width, _height);
@@ -22,8 +24,8 @@ void EQPage::begin(int _xPos, int _yPos, int _width, int _height, String _name, 
 	}
 
 	EQSubPages[0].setUpButton(0, "Preset", &currentPresetSlotName, switchPresetSlot, this);
-	EQSubPages[0].setUpButton(1, "Load", &EQSettings->lowShelfFreq, loadPresetSlot, this);
-	EQSubPages[0].setUpButton(2, "Save", &EQSettings->lowShelfFreq, savePresetSlot, this);
+	EQSubPages[0].setUpButton(1, "Load", &saveString, loadPresetSlot, this);
+	EQSubPages[0].setUpButton(2, "Save", &saveString, savePresetSlot, this);
 	EQSubPages[0].setName("Presets");
 
 	EQSubPages[1].setUpButton(0, "Gain", &EQSettings->lowShelfGain, setLowShelfGain, this);

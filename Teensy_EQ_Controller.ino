@@ -50,7 +50,8 @@ void setup() {
 	pinMode(BUTTON_1, INPUT);
 	pinMode(BUTTON_2, INPUT);
 	loadSettings();
-	loadEQSettings(0);
+	loadEQSettings(0,0);
+	loadEQSettings(1,1);
 	goToPresetSlot(0);
 
 	strip.begin();
